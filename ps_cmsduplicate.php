@@ -9,7 +9,7 @@ class Ps_CmsDuplicate extends Module
     {
         $this->name = 'ps_cmsduplicate';
         $this->tab = 'administration';
-        $this->version = '0.0.4';
+        $this->version = '0.0.5';
         $this->author = 'Jaymian-Lee Reinartz';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -25,6 +25,7 @@ class Ps_CmsDuplicate extends Module
         return parent::install() 
             && $this->registerHook('actionAdminControllerSetMedia') 
             && $this->registerHook('displayAdminCmsToolbarButtons') 
+            && $this->registerHook('displayAdminAfterHeaderToolbar') // Register the new hook
             && $this->copyOverrideFiles() 
             && $this->copyJsFiles();
     }
@@ -44,6 +45,19 @@ class Ps_CmsDuplicate extends Module
     }
 
     public function hookDisplayAdminCmsToolbarButtons($params)
+    {
+        $id_cms = (int)Tools::getValue('id_cms');
+        if ($id_cms) {
+            $url = $this->context->link->getAdminLink('AdminCmsContent').'&action=duplicate&id_cms='.$id_cms;
+            $this->context->smarty->assign([
+                'duplicate_url' => $url,
+            ]);
+            return $this->display(__FILE__, 'views/templates/admin/duplicate_button.tpl');
+        }
+    }
+
+    // New hook to add the duplicate button in the specified location
+    public function hookDisplayAdminAfterHeaderToolbar($params)
     {
         $id_cms = (int)Tools::getValue('id_cms');
         if ($id_cms) {

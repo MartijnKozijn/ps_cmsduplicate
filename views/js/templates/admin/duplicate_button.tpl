@@ -1,5 +1,5 @@
-<div class="btn-group">
-    <a href="{$duplicate_url}" class="btn btn-default">
-        <i class="process-icon-copy"></i> {$smarty.const.L('Duplicate')}
+<div class="d-none d-lg-flex ml-auto">
+    <a href="{$duplicate_url}" class="btn btn-primary ml-3">
+        <i class="icon-copy"></i> {$smarty.const.L('Duplicate')}
     </a>
 </div>
