@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     duplicateButton.setAttribute('href', menu.closest('tr').querySelector('a.edit').href.replace('update', 'duplicate'));
                     duplicateButton.innerHTML = '<i class="icon-copy"></i> Duplicate';
                     
-                    menu.appendChild(duplicateButton);
+                    if (!menu.querySelector('.icon-copy')) {
+                        menu.appendChild(duplicateButton);
+                    }
                 }
             }, 100);
         });
